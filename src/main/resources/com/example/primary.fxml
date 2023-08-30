@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" prefHeight="360.0" prefWidth="433.0" spacing="20.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.PrimaryController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="JOGO INOVADOR: PEDRA, PAPEL E TESOURA">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Escolha um e clique jogar!" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+         <children>
+            <RadioButton fx:id="rdbPedra" mnemonicParsing="false" text="Pedra">
+               <toggleGroup>
+                  <ToggleGroup fx:id="opcoesJogada" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rdbPapel" mnemonicParsing="false" text="Papel" toggleGroup="$opcoesJogada" />
+            <RadioButton fx:id="rdbTesoura" mnemonicParsing="false" text="Tesoura" toggleGroup="$opcoesJogada" />
+         </children>
+      </HBox>
+      <Button fx:id="buttonJogar" mnemonicParsing="false" onAction="#jogar" text="JOGAR" />
+   </children>
+</VBox>
