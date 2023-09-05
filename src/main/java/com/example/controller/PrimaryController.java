@@ -54,11 +54,8 @@ public class PrimaryController {
         return opcaoJogadaBOT;
     }
 
-    public void verificarResultado() {
+    public void terminarPartida() {
         if (ptsJogador == 3 || ptsBot == 3) {
-            Alert alertaFimDaPartida = new Alert(AlertType.INFORMATION, "Acabou a partida! Para jogar outra é só continuar clicando em jogar.");
-            alertaFimDaPartida.setHeaderText("Fim de jogo");
-            alertaFimDaPartida.show();
             ptsJogador = 0;
             ptsBot = 0;
         }
@@ -78,22 +75,37 @@ public class PrimaryController {
                 (opcaoSelecionada.equals("papel") && opcaoJogadaBOT.equals("pedra")) ||
                 (opcaoSelecionada.equals("tesoura") && opcaoJogadaBOT.equals("papel"))) {
 
-            Alert alertaVitoria = new Alert(AlertType.INFORMATION, "Você venceu!");
-            alertaVitoria.setHeaderText("Resultado");
-            alertaVitoria.show();
             ptsJogador++;
-            // return "Jogador Venceu";
+            if (ptsJogador < 3) {
+                Alert alertaVitoria = new Alert(AlertType.INFORMATION,
+                        "Você venceu!\nPlacar atualizado:\nJogador " + ptsJogador + "x" + ptsBot + " Bot");
+                alertaVitoria.setHeaderText("Resultado");
+                alertaVitoria.show();
+            } else {
+                Alert alertaVitoria = new Alert(AlertType.INFORMATION,
+                        "Você venceu a partida!\nPlacar final:\nJogador " + ptsJogador + "x" + ptsBot
+                                + " Bot\nPara outra partida melhor de 5, clique em jogar.");
+                alertaVitoria.setHeaderText("FIM DE JOGO!");
+                alertaVitoria.show();
+            }
         } else {
-            Alert alertaDerrota = new Alert(AlertType.INFORMATION, "Você perdeu!");
-            alertaDerrota.setHeaderText("Resultado");
-            alertaDerrota.show();
             ptsBot++;
-            // return "BOT venceu";
+            if (ptsBot < 3) {
+                Alert alertaVitoria = new Alert(AlertType.INFORMATION,
+                        "Você perdeu!\nPlacar atualizado:\nJogador " + ptsJogador + "x" + ptsBot + " Bot");
+                alertaVitoria.setHeaderText("Resultado");
+                alertaVitoria.show();
+            } else {
+                Alert alertaVitoria = new Alert(AlertType.INFORMATION,
+                        "Você perdeu a partida!\nPlacar final:\nJogador " + ptsJogador + "x" + ptsBot
+                                + " Bot\nPara outra partida melhor de 5, clique em jogar.");
+                alertaVitoria.setHeaderText("FIM DE JOGO!");
+                alertaVitoria.show();
+            }
         }
 
-        System.out.println("Pontos jogador: " + ptsJogador + " || Pontos Bot: " + ptsBot);
-
-        verificarResultado();
+        terminarPartida();
 
     }
+
 }
