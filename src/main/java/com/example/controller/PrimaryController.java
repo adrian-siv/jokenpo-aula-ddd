@@ -60,18 +60,10 @@ public class PrimaryController {
         } else if (ptsBot == 3) {
             return "Bot";
         }
-        return "Partida ainda não terminou";
+        return "";
     }
 
     public void terminarPartida() {
-        ResultadoDao resultadoDao = new ResultadoDao();
-        String vencedor = determinarVencedor();
-        try {
-            resultadoDao.inserir(numeroPartida, ptsJogador, ptsBot, vencedor);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         if (ptsJogador == 3 || ptsBot == 3) {
             ptsJogador = 0;
             ptsBot = 0;
@@ -90,12 +82,15 @@ public class PrimaryController {
                 || (opcaoSelecionada.equals("papel") && opcaoJogadaBOT.equals("pedra"))
                 || (opcaoSelecionada.equals("tesoura") && opcaoJogadaBOT.equals("papel"))) {
             ptsJogador++;
+
             if (ptsJogador < 3) {
                 Alert alertaVitoria = new Alert(AlertType.INFORMATION,
                         "Você venceu!\nPlacar atualizado:\nJogador " + ptsJogador + "x" + ptsBot + " Bot");
                 alertaVitoria.setHeaderText("Resultado");
                 alertaVitoria.show();
             } else {
+                inserirResultado("Jogador");
+                numeroPartida++;
                 Alert alertaVitoria = new Alert(AlertType.INFORMATION,
                         "Você venceu a partida!\nPlacar final:\nJogador " + ptsJogador + "x" + ptsBot
                                 + " Bot\nPara outra partida melhor de 5, clique em jogar.");
@@ -104,12 +99,15 @@ public class PrimaryController {
             }
         } else {
             ptsBot++;
+
             if (ptsBot < 3) {
                 Alert alertaVitoria = new Alert(AlertType.INFORMATION,
                         "Você perdeu!\nPlacar atualizado:\nJogador " + ptsJogador + "x" + ptsBot + " Bot");
                 alertaVitoria.setHeaderText("Resultado");
                 alertaVitoria.show();
             } else {
+                inserirResultado("Bot");
+                numeroPartida++;
                 Alert alertaVitoria = new Alert(AlertType.INFORMATION,
                         "Você perdeu a partida!\nPlacar final:\nJogador " + ptsJogador + "x" + ptsBot
                                 + " Bot\nPara outra partida melhor de 5, clique em jogar.");
@@ -118,7 +116,15 @@ public class PrimaryController {
             }
         }
 
-        numeroPartida++;
         terminarPartida();
+    }
+
+    private void inserirResultado(String vencedor) {
+        ResultadoDao resultadoDao = new ResultadoDao();
+        try {
+            resultadoDao.inserir(numeroPartida, ptsJogador, ptsBot, vencedor);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
