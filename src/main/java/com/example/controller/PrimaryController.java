@@ -23,6 +23,9 @@ public class PrimaryController {
     String opcaoSelecionada;
     String opcaoJogadaBOT = "";
 
+    Integer ptsJogador = 0;
+    Integer ptsBot = 0;
+
     Random numeroAleatorio = new Random();
 
     public String capturarOpcao() {
@@ -51,39 +54,46 @@ public class PrimaryController {
         return opcaoJogadaBOT;
     }
 
+    public void verificarResultado() {
+        if (ptsJogador == 3 || ptsBot == 3) {
+            Alert alertaFimDaPartida = new Alert(AlertType.INFORMATION, "Acabou a partida! Para jogar outra é só continuar clicando em jogar.");
+            alertaFimDaPartida.setHeaderText("Fim de jogo");
+            alertaFimDaPartida.show();
+            ptsJogador = 0;
+            ptsBot = 0;
+        }
+    }
+
     public void jogar() {
 
-        Integer ptsJogador = 0;
-        Integer ptsBot = 0;
+        capturarOpcao();
+        definirJogadaBOT();
 
-        while (ptsJogador < 3 || ptsBot < 3) {
-            capturarOpcao();
-            definirJogadaBOT();
-    
-            if (opcaoSelecionada.equals(opcaoJogadaBOT)) {
-                Alert alertaEmpate = new Alert(AlertType.INFORMATION, "Empate!");
-                alertaEmpate.setHeaderText("Resultado");
-                alertaEmpate.show();
-                // return "Empate";
-            } else if 
-                    ((opcaoSelecionada.equals("pedra") && opcaoJogadaBOT.equals("tesoura")) ||
-                    (opcaoSelecionada.equals("papel") && opcaoJogadaBOT.equals("pedra")) ||
-                    (opcaoSelecionada.equals("tesoura") && opcaoJogadaBOT.equals("papel"))) {
-    
-                Alert alertaVitoria = new Alert(AlertType.INFORMATION, "Você venceu!");
-                alertaVitoria.setHeaderText("Resultado");
-                alertaVitoria.show();
-                ptsJogador++;    
-                // return "Jogador Venceu";
-            } else {
-                Alert alertaDerrota = new Alert(AlertType.INFORMATION, "Você perdeu!");
-                alertaDerrota.setHeaderText("Resultado");
-                alertaDerrota.show();
-                ptsBot++;
-                // return "BOT venceu";
-            }
+        if (opcaoSelecionada.equals(opcaoJogadaBOT)) {
+            Alert alertaEmpate = new Alert(AlertType.INFORMATION, "Empate!");
+            alertaEmpate.setHeaderText("Resultado");
+            alertaEmpate.show();
+            // return "Empate";
+        } else if ((opcaoSelecionada.equals("pedra") && opcaoJogadaBOT.equals("tesoura")) ||
+                (opcaoSelecionada.equals("papel") && opcaoJogadaBOT.equals("pedra")) ||
+                (opcaoSelecionada.equals("tesoura") && opcaoJogadaBOT.equals("papel"))) {
+
+            Alert alertaVitoria = new Alert(AlertType.INFORMATION, "Você venceu!");
+            alertaVitoria.setHeaderText("Resultado");
+            alertaVitoria.show();
+            ptsJogador++;
+            // return "Jogador Venceu";
+        } else {
+            Alert alertaDerrota = new Alert(AlertType.INFORMATION, "Você perdeu!");
+            alertaDerrota.setHeaderText("Resultado");
+            alertaDerrota.show();
+            ptsBot++;
+            // return "BOT venceu";
         }
-        System.out.println("Acabou o jogo");
+
+        System.out.println("Pontos jogador: " + ptsJogador + " || Pontos Bot: " + ptsBot);
+
+        verificarResultado();
 
     }
 }
