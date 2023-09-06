@@ -11,17 +11,16 @@ public class ResultadoDao {
     private final String PASS = "081100";
     private final String URL = "jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl";
 
-    public void inserir(Integer numeroPartida, Integer ptsJogador, Integer ptsBot, String vencedor)
+    public void inserir(Integer ptsJogador, Integer ptsBot, String vencedor)
             throws SQLException {
         var con = DriverManager.getConnection(URL, USER, PASS);
 
-        var sql = "INSERT INTO resultados (id_partida, pts_jogador, pts_bot, vencedor) VALUES (?, ?, ?, ?)";
+        var sql = "INSERT INTO resultados (pts_jogador, pts_bot, vencedor) VALUES (?, ?, ?)";
         var instrucao = con.prepareStatement(sql);
         instrucao = con.prepareStatement(sql);
-        instrucao.setInt(1, numeroPartida);
-        instrucao.setInt(2, ptsJogador);
-        instrucao.setInt(3, ptsBot);
-        instrucao.setString(4, vencedor);
+        instrucao.setInt(1, ptsJogador);
+        instrucao.setInt(2, ptsBot);
+        instrucao.setString(3, vencedor);
 
         instrucao.executeUpdate();
 
